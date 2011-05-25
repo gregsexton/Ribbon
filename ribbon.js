@@ -50,11 +50,15 @@ Ribbon.prototype.draw = function () {
 
     ctx.fillStyle = "rgb(255,255,255)";
 
-    for(var i = 0; i<this.maxx/(this.width*2); i++){
-        //TODO: interpolate/anti-alias
-        //achieve by drawing lines between points?
-        ctx.fillRect(i*this.width, this.points[i], this.width, this.height);
+    ctx.beginPath();
+    ctx.moveTo(0, this.points[0]);
+    for(var i = 1; i<this.maxx/(this.width*2); i++){
+        ctx.lineTo(i*this.width, this.points[i]);
     }
+
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = this.height;
+    ctx.stroke();
 }
 
 Ribbon.prototype.update = function () {
