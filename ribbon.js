@@ -5,7 +5,8 @@ function Ribbon(canvasWidth, canvasHeight) {
     this.maxy = canvasHeight;
 
     this.height = 4;
-    this.width = 2;
+    this.width  = 4; //distance between interpolated points
+                     //the larger this number the 'faster' the ribbon moves.
 
     this.points = []
     for(var i = 0; i<canvasWidth/(this.width*2); i++){
@@ -16,10 +17,15 @@ function Ribbon(canvasWidth, canvasHeight) {
     this.gravity  = 7.0;
 
     this.rising = false;
+
+    this.strokes = ["#ff0000", "#ff7000", "#fffc00", "#00b439", "#00eaff", "#2428e6", "#b320e6", "#ff00c6"];
+
+    this.stroke = 0; //current starting stroke color
+    this.offset = -1; //the current stroke offset, in order to make the colors 'move'
 }
 
 Ribbon.prototype.moveUp = function (delta) {
-    if(this.lastPoint() - delta + this.height > this.miny){
+    if(this.lastPoint() - delta + this.height > this.miny){ //TODO: needs to be combined into a single move func
         this.setPoints(-delta);
     }else{
         this.setPoints(0);
@@ -44,19 +50,34 @@ Ribbon.prototype.lastPoint = function () {
     return this.points[this.points.length-1]
 }
 
-Ribbon.prototype.draw = function () {
+Ribbon.prototype.draw = function () { //TODO: refactor
     var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
+    var ctx    = canvas.getContext("2d");
 
-    ctx.fillStyle = "rgb(255,255,255)";
+    this.offset = (this.offset+1) % 20;
+    if(this.offset == 0){
+        this.stroke = (this.stroke+1) % this.strokes.length;
+    }
+    var stroke = this.stroke;
 
     ctx.beginPath();
     ctx.moveTo(0, this.points[0]);
+
     for(var i = 1; i<this.maxx/(this.width*2); i++){
+
         ctx.lineTo(i*this.width, this.points[i]);
+
+        if((i+this.offset)%20 == 0){
+            //begin a new color section
+            ctx.strokeStyle = this.strokes[stroke++ % this.strokes.length];
+            ctx.lineWidth = this.height;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo((i*this.width), this.points[i]);
+        }
     }
 
-    ctx.strokeStyle = "#ffffff";
+    ctx.strokeStyle = this.strokes[stroke++ % this.strokes.length];
     ctx.lineWidth = this.height;
     ctx.stroke();
 }
