@@ -50,7 +50,8 @@ Ribbon.prototype.lastPoint = function () {
     return this.points[this.points.length-1]
 }
 
-Ribbon.prototype.draw = function () { //TODO: refactor
+//TODO: remove magic numbers
+Ribbon.prototype.draw = function () { //TODO: refactor, far too busy
     var canvas = document.getElementById("canvas");
     var ctx    = canvas.getContext("2d");
 
@@ -61,7 +62,9 @@ Ribbon.prototype.draw = function () { //TODO: refactor
     var stroke = this.stroke;
 
     ctx.beginPath();
-    ctx.moveTo(0, this.points[0]);
+    var startSegmentX = 0;
+    var startSegmentY = this.points[0];
+    ctx.moveTo(startSegmentX, startSegmentY);
 
     for(var i = 1; i<this.maxx/(this.width*2); i++){
 
@@ -69,28 +72,42 @@ Ribbon.prototype.draw = function () { //TODO: refactor
 
         if((i+this.offset)%20 == 0){
             //begin a new color section
-            ctx.strokeStyle = this.strokes[stroke++ % this.strokes.length];
+            var gradient = ctx.createLinearGradient(startSegmentX, startSegmentY,
+                                                    i*this.width, this.points[i]);
+            gradient.addColorStop(0, this.strokes[stroke++ % this.strokes.length]);
+            gradient.addColorStop(1, this.strokes[stroke   % this.strokes.length]);
+            ctx.strokeStyle = gradient;
             ctx.lineWidth = this.height;
             ctx.stroke();
             ctx.beginPath();
-            ctx.moveTo((i*this.width), this.points[i]);
+            startSegmentX = i * this.width;
+            startSegmentY = this.points[i];
+            ctx.moveTo(startSegmentX, startSegmentY);
         }
     }
 
-    ctx.strokeStyle = this.strokes[stroke++ % this.strokes.length];
+    if(startSegmentX > this.maxx/2-this.width)
+        return; //starting a new block of color - nothing to draw; flashes gradient on the screen
+    var gradient = ctx.createLinearGradient(startSegmentX, startSegmentY,
+                                            this.maxx/2-this.width, this.lastPoint());
+
+    gradient.addColorStop(0, this.strokes[stroke++ % this.strokes.length]);
+    gradient.addColorStop(1, this.strokes[stroke   % this.strokes.length]);
+    ctx.strokeStyle = gradient;
     ctx.lineWidth = this.height;
     ctx.stroke();
+
 }
 
 Ribbon.prototype.update = function () {
     //s = ut - 0.5at^2
     //v = u + at
-    var t   = 1;
-    var u   = this.velocity;
-    var a   = this.gravity;
-    var a   = this.rising ? -(a) : a;
-    var s   = (u*t) - (0.5*a*t*t);
-    var v   = u + (a*t);
+    var t = 1;
+    var u = this.velocity;
+    var a = this.gravity;
+    var a = this.rising ? -(a) : a;
+    var s = (u*t) - (0.5*a*t*t);
+    var v = u + (a*t);
 
     //scale down!
     this.moveDown(s/50); 
