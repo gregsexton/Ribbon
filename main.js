@@ -23,7 +23,7 @@ function startGame(){
 function stopGame(){
     clearInterval(refresh);
     game.playing = false;
-    reset();
+    //reset();
 }
 
 function reset(){
@@ -42,7 +42,7 @@ window.onload = function init(){
     reset();
 }
 
-window.onkeydown = function (event) {
+window.onkeydown = function (event){
     if(!game.playing){
         startGame();
         return;
@@ -52,6 +52,6 @@ window.onkeydown = function (event) {
     }
 }
 
-window.onkeyup = function (event) {
+window.onkeyup = function (event){
     game.ribbon.rising = false;
 }

@@ -1,4 +1,4 @@
-function Ribbon(canvasWidth, canvasHeight, canvasID) {
+function Ribbon(canvasWidth, canvasHeight, canvasID){
     this.minx = 0;
     this.maxx = canvasWidth;
     this.miny = 0;
@@ -26,22 +26,22 @@ function Ribbon(canvasWidth, canvasHeight, canvasID) {
     this.offset = -1; //the current stroke offset, in order to make the colors 'move'
 }
 
-Ribbon.prototype.move = function (delta) {
+Ribbon.prototype.move = function (delta){
     this.setPoints(delta);
 }
 
-Ribbon.prototype.setPoints = function (delta) {
+Ribbon.prototype.setPoints = function (delta){
     this.points.shift();
     var lastPoint = this.lastPoint()
     this.points.push(lastPoint + delta);
 }
 
-Ribbon.prototype.lastPoint = function () {
+Ribbon.prototype.lastPoint = function (){
     return this.points[this.points.length-1]
 }
 
 //TODO: remove magic numbers
-Ribbon.prototype.draw = function () { //TODO: refactor, far too busy
+Ribbon.prototype.draw = function (){ //TODO: refactor, far too busy
     var canvas = document.getElementById(this.canvasID);
     var ctx    = canvas.getContext("2d");
 
@@ -89,7 +89,7 @@ Ribbon.prototype.draw = function () { //TODO: refactor, far too busy
 
 }
 
-Ribbon.prototype.update = function () {
+Ribbon.prototype.update = function (){
     //s = ut - 0.5at^2
     //v = u + at
     var t = 1;
