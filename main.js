@@ -9,11 +9,29 @@ function update(){
     ctx.fillStyle = "rgb(15,47,66)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ribbon.update();
-    ribbon.draw();
+    if(!game.update()){
+        stopGame();
+    }
 }
 
-window.onload = window.onresize = function init(){
+function startGame(){
+    refresh = setInterval(update, 17); //roughly 60fps
+    //setInterval(update, 1117); //for debugging
+    game.playing = true;
+}
+
+function stopGame(){
+    clearInterval(refresh);
+    game.playing = false;
+    reset();
+}
+
+function reset(){
+    game = new Game(canvas.width, canvas.height, "canvas");
+    update();
+}
+
+window.onload = function init(){
     var canvas        = document.getElementById("canvas");
     var viewportWidth = window.innerWidth;
     canvas.setAttribute("width",  700);
@@ -21,18 +39,19 @@ window.onload = window.onresize = function init(){
     canvas.style.position = "fixed"
     canvas.style.left     = (viewportWidth - canvas.width) / 2;
 
-    ribbon = new Ribbon(canvas.width, canvas.height);
-
-    setInterval(update, 17); //roughly 60fps
-    update();
+    reset();
 }
 
 window.onkeydown = function (event) {
-    if(!ribbon.rising){
-        ribbon.rising = true;
+    if(!game.playing){
+        startGame();
+        return;
+    }
+    if(!game.ribbon.rising){
+        game.ribbon.rising = true;
     }
 }
 
 window.onkeyup = function (event) {
-    ribbon.rising = false;
+    game.ribbon.rising = false;
 }

@@ -1,11 +1,13 @@
-function Ribbon(canvasWidth, canvasHeight) {
+function Ribbon(canvasWidth, canvasHeight, canvasID) {
     this.minx = 0;
     this.maxx = canvasWidth;
     this.miny = 0;
     this.maxy = canvasHeight;
 
+    this.canvasID = canvasID;
+
     this.height = 4;
-    this.width  = 4; //distance between interpolated points
+    this.width  = 8; //distance between interpolated points
                      //the larger this number the 'faster' the ribbon moves.
 
     this.points = []
@@ -24,20 +26,8 @@ function Ribbon(canvasWidth, canvasHeight) {
     this.offset = -1; //the current stroke offset, in order to make the colors 'move'
 }
 
-Ribbon.prototype.moveUp = function (delta) {
-    if(this.lastPoint() - delta + this.height > this.miny){ //TODO: needs to be combined into a single move func
-        this.setPoints(-delta);
-    }else{
-        this.setPoints(0);
-    }
-}
-
-Ribbon.prototype.moveDown = function (delta) {
-    if(this.lastPoint() + delta < this.maxy){
-        this.setPoints(delta);
-    }else{
-        this.setPoints(0);
-    }
+Ribbon.prototype.move = function (delta) {
+    this.setPoints(delta);
 }
 
 Ribbon.prototype.setPoints = function (delta) {
@@ -52,7 +42,7 @@ Ribbon.prototype.lastPoint = function () {
 
 //TODO: remove magic numbers
 Ribbon.prototype.draw = function () { //TODO: refactor, far too busy
-    var canvas = document.getElementById("canvas");
+    var canvas = document.getElementById(this.canvasID);
     var ctx    = canvas.getContext("2d");
 
     this.offset = (this.offset+1) % 20;
@@ -110,7 +100,7 @@ Ribbon.prototype.update = function () {
     var v = u + (a*t);
 
     //scale down!
-    this.moveDown(s/50); 
+    this.move(s/50); 
 
     this.velocity = v;
 }
