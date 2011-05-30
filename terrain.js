@@ -6,19 +6,21 @@ function Terrain(canvasWidth, canvasHeight, canvasID){
 
     this.canvasID = canvasID;
 
-    this.width  = 8; //distance between interpolated points
+    this.width  = 4; //distance between interpolated points
 
-    this.gapHeight = 250;
     this.maxForce  = 7.0; //max absolute value of force used to modify terrain
-
     this.nextForceChange = 0;
     this.currentForce    = 0;
     this.currentVelocity = 0; //current rate of terrain change
     this.rescuing        = false;
 
-    this.points = []
+    this.pointsTop = [];
+    this.pointsBot = [];
+
+    var gapHeight = 250;
     for(var i = 0; i<canvasWidth/(this.width); i++){
-        this.points[i] = (this.maxy-this.gapHeight)/2;
+        this.pointsTop[i] = (this.maxy-gapHeight)/2;
+        this.pointsBot[i] = gapHeight + this.pointsTop[i];
     }
 }
 
@@ -40,19 +42,17 @@ Terrain.prototype.update = function (){
 }
 
 Terrain.prototype.modifyForce = function (){
-    //TODO: cap max possible height taking in to account gapHeight
-    //TODO: adjust so that cave in the middle, should never have floor or ceiling dissappear
     if(this.nextForceChange == 0){
         var nextForce     = this.maxForce * Math.random();
         var sign          = Math.floor(Math.random() * 10) % 2 == 0 ? (-1) : 1
         this.currentForce = nextForce * sign;
 
         //change the force regardless; iff the terrain is in danger of becoming impassable
-        if(this.lastPoint() + this.gapHeight > this.maxy - 20 ){
+        if(this.lastPointBot() > this.maxy - 20 ){
             this.currentForce = -1 * this.turnForceAround();
             return;
         }
-        if(this.lastPoint() < 20){
+        if(this.lastPointTop() < 20){
             this.currentForce = this.turnForceAround();
             return;
         }
@@ -70,19 +70,30 @@ Terrain.prototype.turnForceAround = function () {
     return Math.abs(this.currentForce);
 }
 
-Terrain.prototype.midPoint = function (){
-    //TODO: does this work always?
-    return this.points[this.points.length/2];
+Terrain.prototype.midPointTop = function (){
+    return this.pointsTop[Math.floor(this.pointsTop.length/2)];
 }
 
-Terrain.prototype.lastPoint = function (){
-    return this.points[this.points.length-1];
+Terrain.prototype.midPointBot = function (){
+    return this.pointsBot[Math.floor(this.pointsBot.length/2)];
+}
+
+Terrain.prototype.lastPointTop = function (){
+    return this.pointsTop[this.pointsTop.length-1];
+}
+
+Terrain.prototype.lastPointBot = function (){
+    return this.pointsBot[this.pointsBot.length-1];
 }
 
 Terrain.prototype.updatePoints = function (delta){
-    this.points.shift();
-    var lastPoint = this.points[this.points.length-1];
-    this.points.push(lastPoint+delta);
+    this.pointsTop.shift();
+    var lastPointTop = this.pointsTop[this.pointsTop.length-1];
+    this.pointsTop.push(lastPointTop+delta);
+
+    this.pointsBot.shift();
+    var lastPointBot = this.pointsBot[this.pointsBot.length-1];
+    this.pointsBot.push(lastPointBot+delta);
 }
 
 Terrain.prototype.draw = function (){
@@ -98,10 +109,10 @@ Terrain.prototype.drawRoof = function (ctx){
     ctx.moveTo(0, 0);
 
     for(var i = 0; i<this.maxx/this.width; i++){
-        ctx.lineTo(i*this.width, this.points[i]);
+        ctx.lineTo(i*this.width, this.pointsTop[i]);
     }
 
-    ctx.lineTo(this.maxx, this.points[this.points.length-1]);
+    ctx.lineTo(this.maxx, this.pointsTop[this.pointsTop.length-1]);
     ctx.lineTo(this.maxx, 0);
     ctx.closePath();
     this.fillTerrain(ctx);
@@ -112,10 +123,10 @@ Terrain.prototype.drawFloor = function (ctx){
     ctx.moveTo(0, this.maxy);
 
     for(var i = 0; i<this.maxx/this.width; i++){
-        ctx.lineTo(i*this.width, this.gapHeight+this.points[i]);
+        ctx.lineTo(i*this.width, this.pointsBot[i]);
     }
 
-    ctx.lineTo(this.maxx, this.gapHeight+this.points[this.points.length-1]);
+    ctx.lineTo(this.maxx, this.pointsBot[this.pointsBot.length-1]);
     ctx.lineTo(this.maxx, this.maxy);
     ctx.closePath();
     this.fillTerrain(ctx);
@@ -124,4 +135,30 @@ Terrain.prototype.drawFloor = function (ctx){
 Terrain.prototype.fillTerrain = function (ctx){
     ctx.fillStyle = '#656565';
     ctx.fill();
+}
+
+Terrain.prototype.increaseWidth = function (delta){
+    var newWidth = this.width + delta;
+
+    //convert current coordinates
+    var newPointsTop = [];
+    var newPointsBot = [];
+    var ratio = this.width/newWidth;
+    for(var i=0; i<this.pointsTop.length; i++){
+        var newIndex = i*ratio;
+        newPointsTop[Math.round(newIndex)] = this.pointsTop[i];
+    }
+    for(var i=0; i<this.pointsBot.length; i++){
+        var newIndex = i*ratio;
+        newPointsBot[Math.round(newIndex)] = this.pointsBot[i];
+    }
+
+    this.pointsTop = newPointsTop;
+    this.pointsBot = newPointsBot;
+    this.width = newWidth;
+}
+
+Terrain.prototype.increaseGap = function (delta){
+    this.pointsTop[this.pointsTop.length-1] -= delta/2;
+    this.pointsBot[this.pointsBot.length-1] += delta/2;
 }

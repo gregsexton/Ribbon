@@ -7,7 +7,7 @@ function Ribbon(canvasWidth, canvasHeight, canvasID){
     this.canvasID = canvasID;
 
     this.height = 4;
-    this.width  = 8; //distance between interpolated points
+    this.width  = 4; //distance between interpolated points
                      //the larger this number the 'faster' the ribbon moves.
 
     this.points = []
@@ -76,7 +76,7 @@ Ribbon.prototype.draw = function (){ //TODO: refactor, far too busy
         }
     }
 
-    if(startSegmentX > this.maxx/2-this.width)
+    if(startSegmentX >= this.maxx/2-this.width)
         return; //starting a new block of color - nothing to draw; flashes gradient on the screen
     var gradient = ctx.createLinearGradient(startSegmentX, startSegmentY,
                                             this.maxx/2-this.width, this.lastPoint());
@@ -103,4 +103,19 @@ Ribbon.prototype.update = function (){
     this.move(s/50); 
 
     this.velocity = v;
+}
+
+Ribbon.prototype.increaseWidth = function (delta){
+    var newWidth = this.width + delta;
+
+    //convert current coordinates
+    var newPoints = [];
+    var ratio = this.width/newWidth;
+    for(var i=0; i<this.points.length; i++){
+        var newIndex = i*ratio;
+        newPoints[Math.round(newIndex)] = this.points[i];
+    }
+
+    this.points = newPoints;
+    this.width = newWidth;
 }

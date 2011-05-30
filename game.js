@@ -9,6 +9,8 @@ function Game(canvasWidth, canvasHeight, canvasID){
     this.terrain  = new Terrain(canvasWidth, canvasHeight, canvasID);
 
     this.playing  = false;
+
+    this.increaseSpeed = 1;
 }
 
 Game.prototype.update = function (){
@@ -30,12 +32,20 @@ Game.prototype.detectCollision = function (){
     }
 
     //check ribbon hasn't hit terrain
-    //TODO: does this work always?
-    if(this.ribbon.lastPoint() < this.terrain.midPoint())
+    if(this.ribbon.lastPoint() < this.terrain.midPointTop())
         return false;
-    if(this.ribbon.lastPoint() > this.terrain.midPoint() + this.terrain.gapHeight)
+    if(this.ribbon.lastPoint() > this.terrain.midPointBot())
         return false;
 
     //all good
     return true;
+}
+
+Game.prototype.makeMoreDifficult = function (){
+    if(this.increaseSpeed == 0){
+        this.ribbon.increaseWidth(1);
+        this.terrain.increaseWidth(1);
+    }
+    this.terrain.increaseGap(-2);
+    this.increaseSpeed = (this.increaseSpeed+1)%10; //increase speed on every tenth call
 }

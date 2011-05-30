@@ -14,14 +14,20 @@ function update(){
     }
 }
 
+function makeMoreDifficult(){
+    game.makeMoreDifficult();
+}
+
 function startGame(){
     refresh = setInterval(update, 17); //roughly 60fps
+    difficult = setInterval(makeMoreDifficult, 1000);
     //setInterval(update, 1117); //for debugging
     game.playing = true;
 }
 
 function stopGame(){
     clearInterval(refresh);
+    clearInterval(difficult);
     game.playing = false;
     //reset();
 }
