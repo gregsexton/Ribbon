@@ -19,9 +19,12 @@ function Terrain(canvasWidth, canvasHeight, canvasID){
 
     var gapHeight = 250;
     for(var i = 0; i<canvasWidth/(this.width); i++){
-        this.pointsTop[i] = (this.maxy-gapHeight)/2;
-        this.pointsBot[i] = gapHeight + this.pointsTop[i];
+        this.pointsTop[i] = 0;
+        this.pointsBot[i] = this.maxy;
     }
+    var index = Math.floor((canvasWidth/this.width));
+    this.pointsTop[index] = (this.maxy-gapHeight)/2;
+    this.pointsBot[index] = gapHeight + this.pointsTop[i];
 }
 
 //TODO: magic numbers
@@ -59,7 +62,7 @@ Terrain.prototype.modifyForce = function (){
         this.rescuing = false;
     }
 
-    this.nextForceChange = (this.nextForceChange+1) % 10;
+    this.nextForceChange = (this.nextForceChange+1) % 5;
 }
 
 Terrain.prototype.turnForceAround = function () {
@@ -125,7 +128,6 @@ Terrain.prototype.drawPoints = function (ctx, points, startY){
     ctx.lineTo(this.maxx, points[points.length-1]);
     ctx.lineTo(this.maxx, startY);
     ctx.closePath();
-    this.fillTerrain(ctx);
 }
 
 Terrain.prototype.fillTerrain = function (ctx, isRoof){
