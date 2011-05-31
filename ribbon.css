@@ -6,3 +6,22 @@ body {
 h1 {
     color: #557181;
 }
+
+.ribbonimg {
+    position: fixed;
+    left: 90px;
+    top: 700px;
+
+}
+
+.game-div {
+    background-color: #ffffff;
+    width: 710px;
+    height: 360px;
+}
+
+.game-canvas {
+    position: relative;
+    top: 5px;
+    left: 5px;
+}

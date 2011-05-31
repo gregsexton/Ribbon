@@ -42,12 +42,10 @@ function reset(){
 }
 
 window.onload = function init(){
-    var canvas        = document.getElementById("canvas");
+    var canvas        = document.getElementById("game-div");
     var viewportWidth = window.innerWidth;
-    canvas.setAttribute("width",  700);
-    canvas.setAttribute("height", 350);
     canvas.style.position = "fixed"
-    canvas.style.left     = (viewportWidth - canvas.width) / 2;
+    canvas.style.left     = (viewportWidth - 710) / 2;
 
     reset();
 }
