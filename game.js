@@ -42,6 +42,7 @@ Game.prototype.detectCollision = function (){
 }
 
 Game.prototype.makeMoreDifficult = function (){
+    //TODO: need to put caps on this!
     if(this.increaseSpeed == 0){
         this.ribbon.increaseWidth(1);
         this.terrain.increaseWidth(1);

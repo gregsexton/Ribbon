@@ -105,35 +105,36 @@ Terrain.prototype.draw = function (){
 }
 
 Terrain.prototype.drawRoof = function (ctx){
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-
-    for(var i = 0; i<this.maxx/this.width; i++){
-        ctx.lineTo(i*this.width, this.pointsTop[i]);
-    }
-
-    ctx.lineTo(this.maxx, this.pointsTop[this.pointsTop.length-1]);
-    ctx.lineTo(this.maxx, 0);
-    ctx.closePath();
-    this.fillTerrain(ctx);
+    this.drawPoints(ctx, this.pointsTop, 0);
+    this.fillTerrain(ctx, true);
 }
 
 Terrain.prototype.drawFloor = function (ctx){
+    this.drawPoints(ctx, this.pointsBot, this.maxy);
+    this.fillTerrain(ctx, false);
+}
+
+Terrain.prototype.drawPoints = function (ctx, points, startY){
     ctx.beginPath();
-    ctx.moveTo(0, this.maxy);
+    ctx.moveTo(0, startY);
 
     for(var i = 0; i<this.maxx/this.width; i++){
-        ctx.lineTo(i*this.width, this.pointsBot[i]);
+        ctx.lineTo(i*this.width, points[i]);
     }
 
-    ctx.lineTo(this.maxx, this.pointsBot[this.pointsBot.length-1]);
-    ctx.lineTo(this.maxx, this.maxy);
+    ctx.lineTo(this.maxx, points[points.length-1]);
+    ctx.lineTo(this.maxx, startY);
     ctx.closePath();
     this.fillTerrain(ctx);
 }
 
-Terrain.prototype.fillTerrain = function (ctx){
+Terrain.prototype.fillTerrain = function (ctx, isRoof){
     ctx.fillStyle = '#656565';
+    var gradient = ctx.createLinearGradient(0,0, 0,this.maxy);
+    gradient.addColorStop(isRoof?1:0, '#738392');
+    //gradient.addColorStop(isRoof?0:1, '#1f282d');
+    gradient.addColorStop(isRoof?0:1, '#36383b');
+    ctx.fillStyle = gradient;
     ctx.fill();
 }
 
