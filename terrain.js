@@ -9,7 +9,7 @@ function Terrain(canvasWidth, canvasHeight, canvasID){
     this.width  = 4; //distance between interpolated points
 
     this.maxForce  = 7.0; //max absolute value of force used to modify terrain
-    this.nextForceChange = 0;
+    this.nextForceChangeClk = 0;
     this.currentForce    = 0;
     this.currentVelocity = 0; //current rate of terrain change
     this.rescuing        = false;
@@ -45,7 +45,7 @@ Terrain.prototype.update = function (){
 }
 
 Terrain.prototype.modifyForce = function (){
-    if(this.nextForceChange == 0){
+    if(this.nextForceChangeClk == 0){
         var nextForce     = this.maxForce * Math.random();
         var sign          = Math.floor(Math.random() * 10) % 2 == 0 ? (-1) : 1
         this.currentForce = nextForce * sign;
@@ -62,7 +62,7 @@ Terrain.prototype.modifyForce = function (){
         this.rescuing = false;
     }
 
-    this.nextForceChange = (this.nextForceChange+1) % 5;
+    this.nextForceChangeClk = (this.nextForceChangeClk+1) % 5;
 }
 
 Terrain.prototype.turnForceAround = function () {
@@ -120,9 +120,10 @@ Terrain.prototype.drawFloor = function (ctx){
 Terrain.prototype.drawPoints = function (ctx, points, startY){
     ctx.beginPath();
     ctx.moveTo(0, startY);
+    ctx.lineTo(0, points[0]);
 
-    for(var i = 0; i<this.maxx/this.width; i++){
-        ctx.lineTo(i*this.width, points[i]);
+    for(var i = 2; i<(this.maxx/this.width)-1; i+=2){
+        ctx.quadraticCurveTo(i*this.width, points[i], (i+1)*this.width, points[i+1]);
     }
 
     ctx.lineTo(this.maxx, points[points.length-1]);
@@ -131,10 +132,10 @@ Terrain.prototype.drawPoints = function (ctx, points, startY){
 }
 
 Terrain.prototype.fillTerrain = function (ctx, isRoof){
-    ctx.fillStyle = '#656565';
+    ctx.strokeStyle = '#f1e5c9';
+    ctx.stroke();
     var gradient = ctx.createLinearGradient(0,0, 0,this.maxy);
     gradient.addColorStop(isRoof?1:0, '#738392');
-    //gradient.addColorStop(isRoof?0:1, '#1f282d');
     gradient.addColorStop(isRoof?0:1, '#36383b');
     ctx.fillStyle = gradient;
     ctx.fill();
