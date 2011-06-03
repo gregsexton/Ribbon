@@ -132,6 +132,7 @@ Terrain.prototype.drawPoints = function (ctx, points, startY){
 }
 
 Terrain.prototype.fillTerrain = function (ctx, isRoof){
+    ctx.lineWidth   = 4;
     ctx.strokeStyle = '#f1e5c9';
     ctx.stroke();
     var gradient = ctx.createLinearGradient(0,0, 0,this.maxy);
@@ -160,6 +161,10 @@ Terrain.prototype.increaseWidth = function (delta){
     this.pointsTop = newPointsTop;
     this.pointsBot = newPointsBot;
     this.width = newWidth;
+}
+
+Terrain.prototype.gap = function (){
+    return this.lastPointBot() - this.lastPointTop()
 }
 
 Terrain.prototype.increaseGap = function (delta){
