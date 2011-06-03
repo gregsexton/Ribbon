@@ -46,6 +46,10 @@ Game.prototype.detectCollision = function (){
     if(this.ribbon.lastPoint() > this.terrain.midPointBot())
         return false;
 
+    for(i in this.obstacles)
+        if(this.obstacles[i].collidesWith(this.maxx, this.ribbon.lastPoint()))
+            return false;
+
     //all good
     return true;
 }

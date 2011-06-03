@@ -10,8 +10,8 @@ ObstacleStatic.prototype.draw = function (canvasID){
     var ctx    = canvas.getContext("2d");
 
     ctx.strokeStyle = '#f1e5c9';
-    ctx.lineWidth = 2;
-    var gradient = ctx.createLinearGradient(0,0, 0,this.y+this.height);
+    ctx.lineWidth   = 2;
+    var gradient    = ctx.createLinearGradient(0,0, 0,this.y+this.height);
     gradient.addColorStop(0, '#738392');
     gradient.addColorStop(1, '#36383b');
     ctx.fillStyle = gradient;
@@ -25,4 +25,11 @@ ObstacleStatic.prototype.update = function (width){
 
 ObstacleStatic.prototype.shouldDestroy = function (canvasWidth){
     return canvasWidth <= this.xDelta - this.width;
+}
+
+ObstacleStatic.prototype.collidesWith = function (canvasWidth, y){
+    var mid = canvasWidth/2;
+    if((this.xDelta >= mid) && (this.xDelta <= mid + this.width))
+        return (y >= this.y) && (y <= this.y+this.height);
+    return false;
 }
