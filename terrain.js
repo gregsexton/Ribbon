@@ -120,10 +120,9 @@ Terrain.prototype.drawFloor = function (ctx){
 Terrain.prototype.drawPoints = function (ctx, points, startY){
     ctx.beginPath();
     ctx.moveTo(0, startY);
-    ctx.lineTo(0, points[0]);
 
-    for(var i = 2; i<(this.maxx/this.width)-1; i+=2){
-        ctx.quadraticCurveTo(i*this.width, points[i], (i+1)*this.width, points[i+1]);
+    for(var i = 0; i<this.maxx/this.width; i++){
+        ctx.lineTo(i*this.width, points[i]);
     }
 
     ctx.lineTo(this.maxx, points[points.length-1]);
