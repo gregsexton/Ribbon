@@ -120,10 +120,9 @@ Terrain.prototype.drawFloor = function (ctx){
 Terrain.prototype.drawPoints = function (ctx, points, startY){
     ctx.beginPath();
     ctx.moveTo(0, startY);
-    ctx.lineTo(0, points[0]);
 
-    for(var i = 2; i<(this.maxx/this.width)-1; i+=2){
-        ctx.quadraticCurveTo(i*this.width, points[i], (i+1)*this.width, points[i+1]);
+    for(var i = 0; i<this.maxx/this.width; i++){
+        ctx.lineTo(i*this.width, points[i]);
     }
 
     ctx.lineTo(this.maxx, points[points.length-1]);
@@ -132,6 +131,7 @@ Terrain.prototype.drawPoints = function (ctx, points, startY){
 }
 
 Terrain.prototype.fillTerrain = function (ctx, isRoof){
+    ctx.lineWidth   = 4;
     ctx.strokeStyle = '#f1e5c9';
     ctx.stroke();
     var gradient = ctx.createLinearGradient(0,0, 0,this.maxy);
@@ -160,6 +160,10 @@ Terrain.prototype.increaseWidth = function (delta){
     this.pointsTop = newPointsTop;
     this.pointsBot = newPointsBot;
     this.width = newWidth;
+}
+
+Terrain.prototype.gap = function (){
+    return this.lastPointBot() - this.lastPointTop()
 }
 
 Terrain.prototype.increaseGap = function (delta){

@@ -14,18 +14,22 @@ function Game(canvasWidth, canvasHeight, canvasID){
 
     this.score = -1;
     this.scoreDelta = 1;
+
+    this.obstacles = [];
 }
 
 Game.prototype.update = function (){
     this.ribbon.update();
     this.terrain.update();
     this.updateScore();
+    this.updateObstacles();
     this.draw();
     return this.detectCollision();
 }
 
 Game.prototype.draw = function (){
     this.ribbon.draw();
+    this.drawObstacles();
     this.terrain.draw();
     this.drawScore();
 }
@@ -42,6 +46,10 @@ Game.prototype.detectCollision = function (){
     if(this.ribbon.lastPoint() > this.terrain.midPointBot())
         return false;
 
+    for(i in this.obstacles)
+        if(this.obstacles[i].collidesWith(this.maxx, this.ribbon.lastPoint()))
+            return false;
+
     //all good
     return true;
 }
@@ -50,16 +58,43 @@ Game.prototype.updateScore = function (){
     this.score += this.scoreDelta;
 }
 
+Game.prototype.updateObstacles = function (){
+    if(this.obstacles.length > 0){
+        if(this.obstacles[0].shouldDestroy(this.maxx)){
+            this.obstacles.shift();
+        }
+    }
+    for(var i = 0; i<this.obstacles.length; i++){
+        this.obstacles[i].update(this.ribbon.width);
+    }
+}
+
+Game.prototype.drawObstacles = function (){
+    for(var i = 0; i<this.obstacles.length; i++){
+        this.obstacles[i].draw(this.canvasID);
+    }
+}
+
 Game.prototype.makeMoreDifficult = function (){
-    //TODO: need to put caps on this!
+    //TODO: need to put caps on this -- especially obstacles!
     if(this.increaseSpeed == 0){
         this.ribbon.increaseWidth(1);
         this.terrain.increaseWidth(1);
         this.scoreDelta += 2;
     }
+
+    if(this.increaseSpeed % 2 == 0){
+        this.createObstacle();
+    }
+
     this.terrain.increaseGap(-2);
     this.scoreDelta += 1;
     this.increaseSpeed = (this.increaseSpeed+1)%10; //increase speed on every tenth call
+}
+
+Game.prototype.createObstacle = function (){
+    var obstacle = new ObstacleStatic(this.terrain.gap(), this.terrain.lastPointTop());
+    this.obstacles.push(obstacle);
 }
 
 Game.prototype.drawScore = function (){
