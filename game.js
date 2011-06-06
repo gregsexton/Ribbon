@@ -76,19 +76,20 @@ Game.prototype.drawObstacles = function (){
 }
 
 Game.prototype.makeMoreDifficult = function (){
-    //TODO: need to put caps on this -- especially obstacles!
-    if(this.increaseSpeed == 0){
+    if(this.increaseSpeed == 0 && this.ribbon.width < 10){
         this.ribbon.increaseWidth(1);
         this.terrain.increaseWidth(1);
         this.scoreDelta += 2;
     }
 
-    if(this.increaseSpeed % 2 == 0){
+    if(Math.floor(Math.random()*10) % 2 == 0){
         this.createObstacle();
     }
 
-    this.terrain.increaseGap(-2);
-    this.scoreDelta += 1;
+    if(this.terrain.gap() > 100){
+        this.terrain.increaseGap(-2);
+        this.scoreDelta += 1;
+    }
     this.increaseSpeed = (this.increaseSpeed+1)%10; //increase speed on every tenth call
 }
 
