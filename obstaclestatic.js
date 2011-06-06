@@ -13,7 +13,7 @@ function ObstacleStatic(availableHeight, yMin){
 }
 
 ObstacleStatic.prototype.generatePoints = function (){
-    var deviationRange = 5;
+    var deviationRange = 4;
     for(var i = 0; i<this.width/this.sampleWidth; i++){
         var signTop = Math.pow(-1, Math.round(Math.random()*10));
         var signBot = Math.pow(-1, Math.round(Math.random()*10));
@@ -42,11 +42,13 @@ ObstacleStatic.prototype.draw = function (canvasID){
 
 ObstacleStatic.prototype.model = function (x, ctx){
     ctx.beginPath();
-    ctx.moveTo(x, this.y);
+    ctx.moveTo(x, this.pointsTop[0]);
 
     //draw top
-    for(var i=0; i<this.pointsTop.length; i++)
-        ctx.lineTo(x+i*this.sampleWidth, this.pointsTop[i]);
+    for(var i=0; i<this.pointsTop.length-1; i=i+2){
+        ctx.quadraticCurveTo(x+i*this.sampleWidth, this.pointsTop[i],
+                             x+(i+1)*this.sampleWidth, this.pointsTop[i+1]);
+    }
 
     //join top to bottom using quadratic and control point
     var lastPointIdx = this.pointsBot.length-1;
@@ -54,12 +56,14 @@ ObstacleStatic.prototype.model = function (x, ctx){
     ctx.quadraticCurveTo(rightMostX+this.controlPointR[0], this.controlPointR[1],
                          rightMostX, this.pointsBot[lastPointIdx]);
     //draw bottom
-    for(var i=this.pointsBot.length-2; i>=0; i--)
-        ctx.lineTo(x+i*this.sampleWidth, this.pointsBot[i]);
+    for(var i=this.pointsBot.length-2; i>=0; i=i-2)
+        ctx.quadraticCurveTo(x+i*this.sampleWidth, this.pointsBot[i],
+                             x+(i-1)*this.sampleWidth, this.pointsBot[i-1]);
 
     //join bottom to top using quadratic and control point
     ctx.quadraticCurveTo(x-this.controlPointL[0], this.controlPointL[1],
                          x, this.pointsTop[0]);
+    ctx.closePath();
 }
 
 ObstacleStatic.prototype.fillObstacle = function (ctx){
