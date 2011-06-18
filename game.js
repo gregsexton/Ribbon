@@ -33,6 +33,7 @@ Game.prototype.update = function (){
 }
 
 Game.prototype.draw = function (){
+    this.clear();
     this.ribbon.draw();
     this.drawObstacles();
     this.terrain.draw();
@@ -118,6 +119,20 @@ Game.prototype.drawScore = function (){
     ctx.fillText(score, 10, this.maxy-10);
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
+}
+
+Game.prototype.clear = function (){
+    var canvas = document.getElementById(this.canvasID);
+    var ctx    = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
+
+    //draw background
+    var gradient = ctx.createLinearGradient(0,0, canvas.width,0);
+    gradient.addColorStop(0,   '#1b2936');
+    gradient.addColorStop(1,   '#273a4d');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function pad(inStr, len){
