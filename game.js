@@ -141,3 +141,83 @@ function pad(inStr, len){
         str = '0' + str;
     return str;
 }
+
+Game.prototype.showEndGameScreen = function (){
+    this.started = false;
+
+    var canvas = document.getElementById(this.canvasID);
+    var ctx    = canvas.getContext("2d");
+
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font          = "bold 56px 'Luckiest Guy', sans-serif";
+    ctx.textBaseline  = 'top';
+    ctx.shadowColor   = '#000000';
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 4;
+    ctx.fillStyle     = '#f8ed43';
+
+    this.drawCenteredText(this.generateInsult(), 20);
+    this.drawCenteredText("Your score: " + this.score.toString(), 80);
+
+    var img = new Image();
+    img.src = "./play_icon.png";
+    ctx.drawImage(img, (this.maxx-img.width)/2, 140);
+
+    this.drawCenteredText("Try again?", 140+img.height+20);
+
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+}
+
+Game.prototype.drawCenteredText = function (text,y){
+    var canvas = document.getElementById(this.canvasID);
+    var ctx    = canvas.getContext("2d");
+    ctx.fillText(text, (this.maxx-ctx.measureText(text).width)/2, y);
+}
+
+Game.prototype.generateInsult = function(){
+    var bad = ["Worst ever?",
+               "Oh dear...",
+               "Hopeless",
+               "Plain awful",
+               "You need practice",
+               "You suck!",
+               "Terrible",
+               "I can't watch"];
+
+    var mediocre = ["Meh",
+                    "You can do better",
+                    "I've seen worse",
+                    "Average to bad",
+                    "Keep trying",
+                    "Oops",
+                    "That's not the idea"];
+
+    var good = ["Nice",
+                "Not bad!",
+                "Good work",
+                "Acceptable",
+                "Alright, I suppose..."];
+
+    var vgood = ["Excellent",
+                 "Getting bored?",
+                 "Too easy?",
+                 "Are you cheating?",
+                 "Jedi, huh?",
+                 "Ribbon: mastered"];
+
+    if(this.score < 20000){
+        var group = bad;
+    }else if(this.score < 100000){
+        var group = mediocre;
+    }else if(this.score < 150000){
+        var group = good;
+    }else{
+        var group = vgood;
+    }
+
+    var idx = Math.round(Math.random() * (group.length-1))
+    return group[idx];
+}
