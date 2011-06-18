@@ -119,3 +119,42 @@ Ribbon.prototype.increaseWidth = function (delta){
     this.points = newPoints;
     this.width = newWidth;
 }
+
+Ribbon.prototype.die = function (terrain, game){
+    var velocities = [];
+    for(var i=0; i<this.points.length; i++){
+        velocities[i] = 0;
+    }
+
+    this.diehelp(0, velocities, terrain, game);
+}
+
+Ribbon.prototype.diehelp = function (offset, velocities, terrain, game){
+    if(this.lastPoint() >= terrain[this.points.length-1] - this.height){
+        game.showEndGameScreen();
+        return;
+    }
+
+    var a = 2;
+
+    for(var i = 0; i < offset; i++){
+
+        var velocity = velocities[i];
+        var s = velocity - (0.5*a);
+        var newVelocity = velocity + a;
+
+        this.points[i] += s;
+        velocities[i] = newVelocity
+
+        if(this.points[i] >= terrain[i]-this.height){
+            this.points[i] = terrain[i]-this.height
+        }
+    }
+
+    game.draw();
+
+    //recurse with timeout
+    var _this = this;
+    var offsettmp = offset < this.points.length ? offset + 1 : offset;
+    setTimeout(function(){ _this.diehelp(offsettmp, velocities, terrain, game) }, 10)
+}

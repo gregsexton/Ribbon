@@ -24,7 +24,12 @@ Game.prototype.update = function (){
     this.updateScore();
     this.updateObstacles();
     this.draw();
-    return this.detectCollision();
+
+    var crash = this.detectCollision();
+    if(crash){
+        this.ribbon.die(this.terrain.pointsBot, this);
+    }
+    return crash;
 }
 
 Game.prototype.draw = function (){
@@ -37,21 +42,21 @@ Game.prototype.draw = function (){
 Game.prototype.detectCollision = function (){
     //check ribbon is in canvas bounds
     if(this.ribbon.lastPoint() > this.maxy || this.ribbon.lastPoint() < this.miny){
-        return false;
+        return true;
     }
 
     //check ribbon hasn't hit terrain
     if(this.ribbon.lastPoint() < this.terrain.midPointTop())
-        return false;
+        return true;
     if(this.ribbon.lastPoint() > this.terrain.midPointBot())
-        return false;
+        return true;
 
     for(i in this.obstacles)
         if(this.obstacles[i].collidesWith(this.maxx, this.ribbon.lastPoint()))
-            return false;
-
-    //all good
     return true;
+
+    //all good -- did not crash
+    return false;
 }
 
 Game.prototype.updateScore = function (){
