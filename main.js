@@ -19,12 +19,12 @@ function stopGame(){
     clearInterval(refresh);
     clearInterval(difficult);
     game.playing = false;
-    //reset();
 }
 
 function reset(){
     game = new Game(canvas.width, canvas.height, "canvas");
     update();
+    game.displayStartButton();
 }
 
 window.onload = function init(){
@@ -33,11 +33,17 @@ window.onload = function init(){
     canvas.style.position = "fixed"
     canvas.style.left     = (viewportWidth - 710) / 2;
 
+    canvas.onmousedown = function (){
+        //TODO: fix bug: click during play
+        reset();
+        game.started = true;
+        game.displayStartMessage();
+    }
     reset();
 }
 
 window.onkeydown = function (event){
-    if(!game.playing){
+    if(game.started && !game.playing){
         startGame();
         return;
     }

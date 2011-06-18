@@ -9,6 +9,7 @@ function Game(canvasWidth, canvasHeight, canvasID){
     this.terrain  = new Terrain(canvasWidth, canvasHeight, canvasID);
 
     this.playing  = false;
+    this.started  = false;
 
     this.increaseSpeed = 1;
 
@@ -54,7 +55,7 @@ Game.prototype.detectCollision = function (){
 
     for(i in this.obstacles)
         if(this.obstacles[i].collidesWith(this.maxx, this.ribbon.lastPoint()))
-    return true;
+            return true;
 
     //all good -- did not crash
     return false;
@@ -220,4 +221,32 @@ Game.prototype.generateInsult = function(){
 
     var idx = Math.round(Math.random() * (group.length-1))
     return group[idx];
+}
+
+Game.prototype.displayStartButton = function (){
+    var canvas = document.getElementById(this.canvasID);
+    var ctx    = canvas.getContext("2d");
+
+    var img = new Image();
+    img.src = "./play_icon.png";
+    ctx.drawImage(img, (this.maxx-img.width)/2, (this.maxy-img.height)/2);
+}
+
+Game.prototype.displayStartMessage = function (){
+    var canvas = document.getElementById(this.canvasID);
+    var ctx    = canvas.getContext("2d");
+
+    this.update(); //reset display
+
+    ctx.font          = "bold 48px 'Luckiest Guy', sans-serif";
+    ctx.textBaseline  = 'top';
+    ctx.shadowColor   = '#000000';
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 4;
+    ctx.fillStyle     = '#f8ed43';
+
+    this.drawCenteredText("Press any key to start", this.maxy/2+50);
+
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
 }
