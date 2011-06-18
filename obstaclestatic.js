@@ -26,8 +26,8 @@ ObstacleStatic.prototype.generatePoints = function (){
 
     var controlXDeviation = this.height/2;
     // index 0 is the x delta, index 1 is the actual y value
-    this.controlPointL[0] = Math.round(Math.random() * controlXDeviation);
-    this.controlPointR[0] = Math.round(Math.random() * controlXDeviation);
+    this.controlPointL[0] = Math.round(Math.random() * controlXDeviation)+5;
+    this.controlPointR[0] = Math.round(Math.random() * controlXDeviation)+5;
     this.controlPointL[1] = (Math.random() * this.height)+this.y;
     this.controlPointR[1] = (Math.random() * this.height)+this.y;
 }
