@@ -28,6 +28,7 @@ Game.prototype.update = function (){
 
     var crash = this.detectCollision();
     if(crash){
+        this.started = false;
         this.ribbon.die(this.terrain.pointsBot, this);
     }
     return crash;
@@ -236,7 +237,7 @@ Game.prototype.displayStartMessage = function (){
     var canvas = document.getElementById(this.canvasID);
     var ctx    = canvas.getContext("2d");
 
-    this.update(); //reset display
+    this.draw(); //reset display
 
     ctx.font          = "bold 48px 'Luckiest Guy', sans-serif";
     ctx.textBaseline  = 'top';

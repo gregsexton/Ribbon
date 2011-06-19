@@ -130,7 +130,7 @@ Ribbon.prototype.die = function (terrain, game){
 }
 
 Ribbon.prototype.diehelp = function (offset, velocities, terrain, game){
-    if(this.lastPoint() >= terrain[this.points.length-1] - this.height){
+    if(offset >= this.points.length && this.dead(terrain)){
         game.showEndGameScreen();
         return;
     }
@@ -157,4 +157,13 @@ Ribbon.prototype.diehelp = function (offset, velocities, terrain, game){
     var _this = this;
     var offsettmp = offset < this.points.length ? offset + 1 : offset;
     setTimeout(function(){ _this.diehelp(offsettmp, velocities, terrain, game) }, 10)
+}
+
+Ribbon.prototype.dead = function (terrain){
+    //is every point of the ribbon resting on the terrain?
+    for(var i = 0; i < this.points.length; i++){
+        if(this.points[i] < terrain[i]-this.height)
+            return false;
+    }
+    return true;
 }

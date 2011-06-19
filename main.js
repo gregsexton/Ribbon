@@ -34,10 +34,11 @@ window.onload = function init(){
     canvas.style.left     = (viewportWidth - 710) / 2;
 
     canvas.onmousedown = function (){
-        //TODO: fix bug: click during play
-        reset();
-        game.started = true;
-        game.displayStartMessage();
+        if(!game.started){
+            reset();
+            game.started = true;
+            game.displayStartMessage();
+        }
     }
     reset();
 }
@@ -47,7 +48,7 @@ window.onkeydown = function (event){
         startGame();
         return;
     }
-    if(!game.ribbon.rising){
+    if(game.playing && !game.ribbon.rising){
         game.ribbon.rising = true;
     }
 }
