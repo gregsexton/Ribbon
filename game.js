@@ -144,6 +144,21 @@ function pad(inStr, len){
     return str;
 }
 
+Game.prototype.humanFriendlyScore = function (){
+    var score = this.score.toString();
+    if(score.length < 4){
+        return score;
+    }
+
+    for(var i = score.length, acc = ""; i > 3; i = score.length){
+        take = i%3 == 0 ? 3 : i%3
+        head = score.slice(0, take)
+        score = score.slice(take)
+        acc += head + ','
+    }
+    return acc + score
+}
+
 Game.prototype.showEndGameScreen = function (){
     this.started = false;
 
@@ -161,7 +176,7 @@ Game.prototype.showEndGameScreen = function (){
     ctx.fillStyle     = '#f8ed43';
 
     this.drawCenteredText(this.generateInsult(), 20);
-    this.drawCenteredText("Your score: " + this.score.toString(), 80);
+    this.drawCenteredText("Your score: " + this.humanFriendlyScore(), 80);
 
     var img = new Image();
     img.src = "./play_icon.png";
