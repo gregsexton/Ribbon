@@ -14,12 +14,111 @@
 </head>
 
 <body>
-    <p><img src="logo.png" /></p>
-    <!--<img src="ribbon.png" class="ribbonimg"/>-->
-    <div class="game-div" id="game-div">
-        <canvas id="canvas" width=700px height=350px class="game-canvas">
-            Your browser does not support the canvas tag.
-        </canvas>
+    <div class="header">
+        <div class="header-center">
+            <img src="logo.png" / id="logo">
+        </div>
+    </div>
+    <div class="main-body">
+        <!--<img src="ribbon.png" class="ribbonimg"/>-->
+        <div class="game-div" id="game-div">
+            <canvas id="canvas" width=700px height=350px class="game-canvas">
+                Your browser does not support the canvas tag.
+            </canvas>
+        </div>
+        <div class="non-game" id="non-game">
+            <div class="non-game-content">
+                <h1>Playing Ribbon</h1>
+                <div class="header-shadow"></div>
+                <p>
+                How do you play Ribbon? The idea is to keep the ribbon 'alive' by not
+                crashing into anything as you fly through the cave. The ribbon is
+                magically self-propelling; you just need to keep it up in the air.
+                You can do this by pressing and holding any key on your keyboard
+                after you click play. This will provide an upward force to the
+                ribbon and therefore make it fly upwards. If you want the ribbon to
+                come back down again just release the key and let gravity do its
+                job. It's that simple! Your score will increase as you progress. See
+                if you can get one of the all time top scores. Good luck!
+                </p>
+
+                <p>
+                For those of you interested: Ribbon is written entirely using pure
+                JavaScript and HTML5 technologies. There is no flash on this page!
+                JQuery is used to help out with the small amount of AJAX used in the
+                scoreboard. You can find the source for this small project here.
+                </p>
+
+                <p>
+                Like the game or want to report a bug? You can email me on:
+                gregsexton@gmail.com.
+                </p>
+            </div>
+            <div class="non-game-content">
+                <h1>Scoreboard</h1>
+                <div class="header-shadow"></div>
+                <p>
+                These are the all time, world-wide, top scores for
+                Ribbon.
+                </p>
+                <table class="scoreboard-table">
+                    <tr class="scoreboard-top-row">
+                        <td>1</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                    <tr class="scoreboard-row-alternate">
+                        <td>2</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                    <tr class="scoreboard-row">
+                        <td>3</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                    <tr class="scoreboard-row-alternate">
+                        <td>4</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                    <tr class="scoreboard-row">
+                        <td>5</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                    <tr class="scoreboard-row-alternate">
+                        <td>6</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                    <tr class="scoreboard-row">
+                        <td>7</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                    <tr class="scoreboard-row-alternate">
+                        <td>8</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                    <tr class="scoreboard-row">
+                        <td>9</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                    <tr class="scoreboard-row-alternate">
+                        <td>10</td>
+                        <td>Greg Sexton</td>
+                        <td class="score">123,456</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="clear-both"></div>
+        <div class="copyright">
+            <p>Copyright Greg Sexton 2011</p>
+        </div>
     </div>
 </body>
 </html>

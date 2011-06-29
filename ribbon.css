@@ -1,29 +1,172 @@
 body { 
-    /*background-color: #abc7d1;*/
-    background-color: #1f282d;
+    background-color: #eeeeee;
+    padding: 0px;
+    margin: 0px;
 }
 
-h1 {
-    color: #557181;
+.header{
+    width: 100%;
+    border-bottom: 5px solid #cccccc;
+    background-color: #eeeeee;
+    padding-top: 0px;
+}
+
+.header-center{
+    width: 830px;
+    height: 99px;
+    padding: 0px;
+    background-color: #f7f7f7;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+}
+
+#logo{
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
 }
 
 .ribbonimg {
-    position: fixed;
+    position: static;
     left: 90px;
     top: 700px;
 
 }
 
+.main-body{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    width: 820px;
+    background-color: #f7f7f7;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-bottom: 5px solid #cccccc;
+}
+
 .game-div {
-    background-color: #f1e5c9;
-    width: 710px;
-    height: 360px;
+    background-color: #eeeeee;
+    width: 700px;
+    height: 350px;
+    padding: 5px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+.non-game {
+    background-color: #ffffff;
+    position: static;
+    left: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    padding: 5px;
+    width: 810px;
+    clear: both;
 }
 
 .game-canvas {
-    position: relative;
-    top: 5px;
-    left: 5px;
+    position: static;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.non-game-content{
+    background-color: #ffffff;
+    padding: 0px;
+    width: 360px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+    border-bottom: 3px solid #cccccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    float: left;
+    margin-left: 22px;
+    margin-right: 21px;
+}
+
+.non-game-content>h1 {
+    color: #2F2F2F;
+    font-family: "Arial", "Helvetica", sans-serif;
+    font-size: 32px;
+    padding-left: 10px;
+    border-bottom: 1px solid #cccccc;
+    background-color: #ffffff;
+    margin: 0px;
+    padding: 15px;
+    -moz-border-radius-topright: 5px;
+    border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    border-top-left-radius: 5px;
+}
+
+.header-shadow{
+    height: 5px;
+    background-color: #f1f1f1;
+}
+
+.non-game-content>p {
+    color: #102432;
+    font-family: "Arial", "Helvetica", sans-serif;
+    font-size: 13px;
+    margin: 15px;
+}
+
+.copyright {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2px;
+}
+
+.copyright>p {
+    color: #2F2F2F;
+    text-align: center;
+    color: #888888;
+    font-family: "Verdana", sans-serif;
+    font-size: 8px;
+    margin-top: 20px;
+    margin-bottom: 1px;
+}
+
+.clear-both {
+    clear: both;
+}
+
+.scoreboard-table {
+    color: #2F2F2F;
+    width: 100%;
+    font-family: "Arial", "Helvetica", sans-serif;
+    font-size: 13px;
+    padding: 15px;
+    padding-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 0px;
+}
+
+.scoreboard-top-row{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.scoreboard-row-alternate{
+    background-color: #f1f1f1;
+}
+
+.score {
+    text-align: right;
 }
 
 canvas {

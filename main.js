@@ -30,8 +30,6 @@ function reset(){
 window.onload = function init(){
     var canvas        = document.getElementById("game-div");
     var viewportWidth = window.innerWidth;
-    canvas.style.position = "fixed"
-    canvas.style.left     = (viewportWidth - 710) / 2;
 
     canvas.onmousedown = function (){
         if(!game.started){
