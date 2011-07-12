@@ -186,6 +186,8 @@ Game.prototype.showEndGameScreen = function (){
 
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
+
+    this.makeBlanketVisible(false);
 }
 
 Game.prototype.drawCenteredText = function (text,y){
@@ -265,4 +267,15 @@ Game.prototype.displayStartMessage = function (){
 
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
+
+    this.makeBlanketVisible(true);
+}
+
+Game.prototype.makeBlanketVisible = function (visible){
+    var blanket = document.getElementById("blanket");
+    if(visible){
+        blanket.style.display = 'block';
+    }else{
+        blanket.style.display = 'none';
+    }
 }

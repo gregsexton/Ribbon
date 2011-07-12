@@ -6,13 +6,13 @@ body {
 
 .header{
     width: 100%;
-    border-bottom: 5px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
     background-color: #eeeeee;
     padding-top: 0px;
 }
 
 .header-center{
-    width: 830px;
+    width: 820px;
     height: 99px;
     padding: 0px;
     background-color: #f7f7f7;
@@ -23,9 +23,11 @@ body {
 }
 
 #logo{
+    position: relative;
     margin-top: 0px;
     margin-left: 0px;
     margin-bottom: 0px;
+    z-index: 1000;
 }
 
 .ribbonimg {
@@ -38,7 +40,7 @@ body {
 .main-body{
     margin-left: auto;
     margin-right: auto;
-    padding: 5px;
+    padding: 0px;
     width: 820px;
     background-color: #f7f7f7;
     border-left: 1px solid #cccccc;
@@ -60,7 +62,6 @@ body {
 }
 
 .non-game {
-    background-color: #ffffff;
     position: static;
     left: 50%;
     margin-left: auto;
@@ -72,9 +73,10 @@ body {
 }
 
 .game-canvas {
-    position: static;
+    position: relative;
     margin-left: auto;
     margin-right: auto;
+    z-index: 1000;
 }
 
 .non-game-content{
@@ -171,4 +173,16 @@ td {
 
 canvas {
     cursor: pointer;
+}
+
+#blanket {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    display: none;
+    opacity: 0.8;
+    z-index: 2;
 }
