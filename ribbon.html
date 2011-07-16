@@ -11,6 +11,7 @@
     <script src="obstaclestatic.js" type="text/javascript" charset="utf-8"></script>
     <script src="game.js" type="text/javascript" charset="utf-8"></script>
     <script src="main.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <body>
@@ -58,63 +59,14 @@
             </div>
             <div class="non-game-content">
                 <h1>Scoreboard</h1>
-                <div class="header-shadow"></div>
+                <div class="header-shadow" id="top-scoreboard"></div>
+
                 <p>
                 These are the all time, world-wide, top scores for
                 Ribbon.
                 </p>
-                <table class="scoreboard-table">
-                    <tr class="scoreboard-top-row">
-                        <td>1</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                    <tr class="scoreboard-row-alternate">
-                        <td>2</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                    <tr class="scoreboard-row">
-                        <td>3</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                    <tr class="scoreboard-row-alternate">
-                        <td>4</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                    <tr class="scoreboard-row">
-                        <td>5</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                    <tr class="scoreboard-row-alternate">
-                        <td>6</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                    <tr class="scoreboard-row">
-                        <td>7</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                    <tr class="scoreboard-row-alternate">
-                        <td>8</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                    <tr class="scoreboard-row">
-                        <td>9</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                    <tr class="scoreboard-row-alternate">
-                        <td>10</td>
-                        <td>Greg Sexton</td>
-                        <td class="score">123,456</td>
-                    </tr>
-                </table>
+
+                <div id="scoreboard-container"></div>
             </div>
         </div>
         <div class="clear-both"></div>

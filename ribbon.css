@@ -186,3 +186,80 @@ canvas {
     opacity: 0.8;
     z-index: 2;
 }
+
+#high-score {
+    /*position: fixed;*/
+    /*top: 700px;*/
+    /*left: 700px;*/
+    background-color: #0f161d;
+    z-index: 3;
+    display: none;
+}
+
+#high-score > h1 {
+    font-family: "Luckiest Guy", "Arial", sans-serif;
+    color: #f8ed43;
+    font-size: 40px;
+    padding-left: 10px;
+    /*border-bottom: 1px solid #cccccc;*/
+    /*background-color: #ffffff;*/
+    margin: 0px;
+    padding: 15px;
+}
+
+#high-score-input-name {
+    width: 290px;
+    height: 35px;
+    line-height: 25px;
+    font-size: 17px;
+    font-family: "Arial", "Helvetica", sans-serif;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 7px;
+    padding-right: 7px;
+    margin: 0px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    /*display: block;*/
+    border: 1px solid #cccccc;
+    cursor: auto;
+    -webkit-appearance: none;
+    /*-webkit-user-select: none;*/
+    vertical-align: middle;
+}
+
+#high-score-submit {
+    width: 45px;
+    height: 35px;
+    -webkit-appearance: none;
+    -webkit-box-align: center;
+    margin: 0px;
+    margin-bottom: 10px;
+    background-color: whiteSmoke;
+    background-image: -webkit-linear-gradient(top, whiteSmoke, #F1F1F1);
+    background-clip: border-box;
+    background-origin: padding-box;
+    border-bottom-color: rgba(0, 0, 0, 0.0976562);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-color: rgba(0, 0, 0, 0.0976562);
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: rgba(0, 0, 0, 0.0976562);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: rgba(0, 0, 0, 0.0976562);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    box-sizing: border-box;
+    color: #2F2F2F;
+    display: inline-block;
+    font-family: "Arial", "Helvetica", sans-serif;
+    font-size: 11px;
+    padding: 1px;
+    vertical-align: middle;
+}

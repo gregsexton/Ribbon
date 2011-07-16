@@ -144,6 +144,8 @@ function pad(inStr, len){
     return str;
 }
 
+/////////////////// start and end game methods //////////////////////
+
 Game.prototype.humanFriendlyScore = function (){
     var score = this.score.toString();
     if(score.length < 4){
@@ -188,6 +190,8 @@ Game.prototype.showEndGameScreen = function (){
     ctx.shadowOffsetY = 0;
 
     this.makeBlanketVisible(false);
+
+    this.checkNewHighscore();
 }
 
 Game.prototype.drawCenteredText = function (text,y){
@@ -278,4 +282,32 @@ Game.prototype.makeBlanketVisible = function (visible){
     }else{
         blanket.style.display = 'none';
     }
+}
+
+/////////////////// highscore methods //////////////////////
+
+Game.prototype.checkNewHighscore = function (){
+    if(!this.isNewHighScore()){
+        return;
+    }
+
+    var str = "";
+    str += '<div id="high-score">';
+    str += '    <h1>New Highscore!</h1>';
+    str += '    <form method="get" action="http://www.gregsexton.org/ribbon/score.py" onsubmit="$(\'#high-score\').fadeOut(\'slow\');">';
+    str += '        <input type="text" size="41" spellcheck="false" id="high-score-input-name" name="name"/>';
+    str += '        <input type="submit" name="score-submit" value="Go!" id="high-score-submit" />';
+    str += '        <input type="hidden" name="score" value="'+this.score.toString()+'">';
+    str += '        <input type="hidden" name="new-score" value="1">';
+    str += '    </form>';
+    str += '</div>';
+
+    $("#top-scoreboard").after(str);
+
+    $("#high-score").fadeIn("slow");
+}
+
+Game.prototype.isNewHighScore = function (){
+    //checks that score is higher than 10th highest.
+    return true;
 }

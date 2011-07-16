@@ -39,6 +39,14 @@ window.onload = function init(){
         }
     }
     reset();
+
+    $("#scoreboard-container").load("http://www.gregsexton.org/ribbon/score.py", 
+        function (text, status, request){
+            if(status != "success"){
+                $("#scoreboard-container").after("<p>Error loading scoreboard.</p>");
+            }
+        }
+    );
 }
 
 window.onkeydown = function (event){
