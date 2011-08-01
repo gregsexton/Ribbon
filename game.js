@@ -191,7 +191,7 @@ Game.prototype.showEndGameScreen = function (){
 
     this.makeBlanketVisible(false);
 
-    this.checkNewHighscore();
+    this.checkNewHighscore(this.score);
 }
 
 Game.prototype.drawCenteredText = function (text,y){
@@ -286,11 +286,20 @@ Game.prototype.makeBlanketVisible = function (visible){
 
 /////////////////// highscore methods //////////////////////
 
-Game.prototype.checkNewHighscore = function (){
-    if(!this.isNewHighScore()){
-        return;
-    }
+Game.prototype.checkNewHighscore = function (scoreToCheck){
+    g = this;
+    $.getJSON("score.py",
+        function (data, status, request){
+            if(status == "success"){
+                if(Number(data[data.length-1]['score']) < scoreToCheck){
+                    g.actOnNewHighScore();
+                }
+            }
+        }
+    );
+}
 
+Game.prototype.actOnNewHighScore = function (){
     var str = "";
     str += '<div id="high-score">';
     str += '    <h1>New Highscore!</h1>';
@@ -333,11 +342,6 @@ Game.prototype.checkNewHighscore = function (){
     })
 }
 
-Game.prototype.isNewHighScore = function (){
-    //checks that score is higher than 10th highest.
-    return true;
-}
-
 Game.prototype.buildScoreboard = function (data, callback){
     //pre-condition: data should be a list of maps, each should have a 'name' and 'score' key.
     var str = '<table class="scoreboard-table" id="scoreboard-table" style="display:none;">';
@@ -357,4 +361,3 @@ Game.prototype.buildScoreboard = function (data, callback){
     str += '</table>';
     callback(str);
 }
-

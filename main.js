@@ -48,6 +48,7 @@ window.onload = function init(){
             }
             game.buildScoreboard(data, function(str){
                 $("#scoreboard-container").after(str);
+                $("#scoreboard-table").fadeIn();
             });
         }
     );
