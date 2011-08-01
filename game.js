@@ -294,20 +294,67 @@ Game.prototype.checkNewHighscore = function (){
     var str = "";
     str += '<div id="high-score">';
     str += '    <h1>New Highscore!</h1>';
-    str += '    <form method="get" action="http://www.gregsexton.org/ribbon/score.py" onsubmit="$(\'#high-score\').fadeOut(\'slow\');">';
+    str += '    <form name="highscore-form">';
     str += '        <input type="text" size="41" spellcheck="false" id="high-score-input-name" name="name"/>';
+    str += '        <input type="hidden" id="form-score" name="score" value="'+this.score.toString()+'">';
+    str += '        <input type="hidden" id="form-new-score" name="new-score" value="1">';
     str += '        <input type="submit" name="score-submit" value="Go!" id="high-score-submit" />';
-    str += '        <input type="hidden" name="score" value="'+this.score.toString()+'">';
-    str += '        <input type="hidden" name="new-score" value="1">';
     str += '    </form>';
     str += '</div>';
 
     $("#top-scoreboard").after(str);
-
     $("#high-score").fadeIn("slow");
+    $("#high-score-input-name").focus();
+
+    $("#high-score-submit").click(function (event){
+        event.preventDefault();
+        this.disabled = "disabled"; //prevent multiple submissions
+        $.ajax({
+               type: "POST",
+                url: "http://www.gregsexton.org/ribbon/score.py",
+               data: $(this.form).serialize(),
+            success: function (){
+                //reload the scoreboard!
+                $.getJSON("score.py",
+                    function (data, status, request){
+                        if(status != "success"){
+                            $("#scoreboard-container").after("<p>Error loading scoreboard.</p>");
+                            return;
+                        }
+                        game.buildScoreboard(data, function(str){
+                            $("#scoreboard-table").fadeOut();
+                            $("#scoreboard-table").replaceWith(str);
+                            $("#scoreboard-table").fadeIn();
+                        });
+                    }
+                );
+            }});
+        $("#high-score").fadeOut("slow");
+    })
 }
 
 Game.prototype.isNewHighScore = function (){
     //checks that score is higher than 10th highest.
     return true;
 }
+
+Game.prototype.buildScoreboard = function (data, callback){
+    //pre-condition: data should be a list of maps, each should have a 'name' and 'score' key.
+    var str = '<table class="scoreboard-table" id="scoreboard-table" style="display:none;">';
+    for(var i=0; i<data.length; i++){
+        if(i == 0)
+            str += '<tr class="scoreboard-top-row">';
+        else if(i%2 == 0)
+            str += '<tr class="scoreboard-row">';
+        else
+            str += '<tr class="scoreboard-row-alternate">';
+        str += '<td>'+ (i+1).toString() +'</td>';
+        str += '<td>' + data[i]['name'] + '</td>';
+        str += '<td class="score">' + data[i]['score'] + '</td>';
+        str += '</tr>';
+    }
+
+    str += '</table>';
+    callback(str);
+}
+

@@ -46,30 +46,11 @@ window.onload = function init(){
                 $("#scoreboard-container").after("<p>Error loading scoreboard.</p>");
                 return;
             }
-
-            buildScoreboard(data);
+            game.buildScoreboard(data, function(str){
+                $("#scoreboard-container").after(str);
+            });
         }
     );
-}
-
-function buildScoreboard(data){
-    //pre-condition: data should be a list of maps, each should have a 'name' and 'score' key.
-    var str = '<table class="scoreboard-table">';
-    for(var i=0; i<data.length; i++){
-        if(i == 0)
-            str += '<tr class="scoreboard-top-row">';
-        else if(i%2 == 0)
-            str += '<tr class="scoreboard-row">';
-        else
-            str += '<tr class="scoreboard-row-alternate">';
-        str += '<td>'+ (i+1).toString() +'</td>';
-        str += '<td>' + data[i]['name'] + '</td>';
-        str += '<td class="score">' + data[i]['score'] + '</td>';
-        str += '</tr>';
-    }
-
-    str += '</table>';
-    $("#scoreboard-container").after(str);
 }
 
 window.onkeydown = function (event){
