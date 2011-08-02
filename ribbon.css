@@ -4,6 +4,14 @@ body {
     margin: 0px;
 }
 
+a {
+    color: #102432;
+}
+
+a:visited {
+    color : #102432;
+}
+
 .header{
     width: 100%;
     border-bottom: 1px solid #cccccc;
