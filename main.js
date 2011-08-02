@@ -55,10 +55,15 @@ window.onload = function init(){
 }
 
 window.onkeydown = function (event){
+    if(game.started){
+        event.preventDefault();
+    }
+
     if(game.started && !game.playing){
         startGame();
         return;
     }
+
     if(game.playing && !game.ribbon.rising){
         game.ribbon.rising = true;
     }
