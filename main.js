@@ -40,16 +40,34 @@ window.onload = function init(){
     }
     reset();
 
+    createInitialScoreboard();
+    setInterval(updateScoreboard, 30000); //every 30 secs
+}
+
+function createInitialScoreboard(){
+    buildScoreBoard(function(str){
+        $("#scoreboard-container").after(str);
+        $("#scoreboard-table").fadeIn();
+    });
+}
+
+function updateScoreboard(){
+    buildScoreBoard(function(str){
+        $("#scoreboard-table").fadeOut();
+        $("#scoreboard-table").replaceWith(str);
+        $("#scoreboard-table").fadeIn();
+    });
+}
+
+function buildScoreBoard(callback){
+    //callback should take a string as an argument
     $.getJSON("score.py",
         function (data, status, request){
             if(status != "success"){
                 $("#scoreboard-container").after("<p>Error loading scoreboard.</p>");
                 return;
             }
-            game.buildScoreboard(data, function(str){
-                $("#scoreboard-container").after(str);
-                $("#scoreboard-table").fadeIn();
-            });
+            game.buildScoreboard(data, callback);
         }
     );
 }
