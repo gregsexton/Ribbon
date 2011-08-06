@@ -111,11 +111,12 @@ Game.prototype.drawScore = function (){
     var ctx    = canvas.getContext("2d");
 
     ctx.font          = "bold 24px 'Luckiest Guy', sans-serif";
-    ctx.textBaseline  = 'bottom';
-    ctx.shadowColor   = '#000000';
+    ctx.textBaseline  = "bottom";
+    ctx.fillStyle     = "#f8ed43";
+    ctx.shadowColor   = "rgba(0,0,0,1)";
+    ctx.shadowBlur    = 0;
     ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 4;
-    ctx.fillStyle     = '#f8ed43';
+    ctx.shadowOffsetY = 0;
 
     var score = pad(this.score.toString(), 8);
     ctx.fillText(score, 10, this.maxy-10);
@@ -171,11 +172,12 @@ Game.prototype.showEndGameScreen = function (){
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.font          = "bold 56px 'Luckiest Guy', sans-serif";
-    ctx.textBaseline  = 'top';
-    ctx.shadowColor   = '#000000';
+    ctx.textBaseline  = "top";
+    ctx.fillStyle     = "#f8ed43";
+    ctx.shadowColor   = "rgba(0,0,0,1)";
+    ctx.shadowBlur    = 0;
     ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 4;
-    ctx.fillStyle     = '#f8ed43';
+    ctx.shadowOffsetY = 0;
 
     this.drawCenteredText(this.generateInsult(), 20);
     this.drawCenteredText("Your score: " + this.humanFriendlyScore(), 80);
@@ -261,11 +263,12 @@ Game.prototype.displayStartMessage = function (){
     this.draw(); //reset display
 
     ctx.font          = "bold 48px 'Luckiest Guy', sans-serif";
-    ctx.textBaseline  = 'top';
-    ctx.shadowColor   = '#000000';
+    ctx.textBaseline  = "top";
+    ctx.fillStyle     = "#f8ed43";
+    ctx.shadowColor   = "rgba(0,0,0,1)";
+    ctx.shadowBlur    = 0;
     ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 4;
-    ctx.fillStyle     = '#f8ed43';
+    ctx.shadowOffsetY = 0;
 
     this.drawCenteredText("Press any key to start", this.maxy/2+50);
 
