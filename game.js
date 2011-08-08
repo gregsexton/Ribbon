@@ -171,7 +171,7 @@ Game.prototype.showEndGameScreen = function (){
     ctx.fillStyle = 'rgba(0,0,0,0.5)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.font          = "bold 56px 'Luckiest Guy', sans-serif";
+    ctx.font          = "bold 56px 'Chewy', sans-serif";
     ctx.textBaseline  = "top";
     ctx.fillStyle     = "#f8ed43";
     ctx.shadowColor   = "rgba(0,0,0,1)";
@@ -179,14 +179,14 @@ Game.prototype.showEndGameScreen = function (){
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
 
-    this.drawCenteredText(this.generateInsult(), 20);
-    this.drawCenteredText("Your score: " + this.humanFriendlyScore(), 80);
+    this.drawCenteredText(this.generateInsult(), 0);
+    this.drawCenteredText("Your score: " + this.humanFriendlyScore(), 60);
 
     var img = new Image();
     img.src = "./play_icon.png";
     ctx.drawImage(img, (this.maxx-img.width)/2, 140);
 
-    this.drawCenteredText("Try again?", 140+img.height+20);
+    this.drawCenteredText("Try again?", 120+img.height+20);
 
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
@@ -262,7 +262,7 @@ Game.prototype.displayStartMessage = function (){
 
     this.draw(); //reset display
 
-    ctx.font          = "bold 48px 'Luckiest Guy', sans-serif";
+    ctx.font          = "bold 48px 'Chewy', sans-serif";
     ctx.textBaseline  = "top";
     ctx.fillStyle     = "#f8ed43";
     ctx.shadowColor   = "rgba(0,0,0,1)";
@@ -270,7 +270,7 @@ Game.prototype.displayStartMessage = function (){
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
 
-    this.drawCenteredText("Press any key to start", this.maxy/2+50);
+    this.drawCenteredText("Press any key to start...", this.maxy/2+50);
 
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
