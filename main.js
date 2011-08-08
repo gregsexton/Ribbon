@@ -40,23 +40,32 @@ window.onload = function init(){
     }
     reset();
 
-    createInitialScoreboard();
-    setInterval(updateScoreboard, 30000); //every 30 secs
+    var input = createInitialScoreboard();
+    setInterval(updateScoreboard(input), 30000); //every 30 secs
 }
 
 function createInitialScoreboard(){
+    var extractStr = ""
     buildScoreBoard(function(str){
         $("#scoreboard-container").after(str);
         $("#scoreboard-table").fadeIn();
+        extractStr = str;
     });
+    return extractStr;
 }
 
-function updateScoreboard(){
-    buildScoreBoard(function(str){
-        $("#scoreboard-table").fadeOut();
-        $("#scoreboard-table").replaceWith(str);
-        $("#scoreboard-table").fadeIn();
-    });
+function updateScoreboard(inputStr){
+    var checkString = inputStr
+    return function(){
+        buildScoreBoard(function(str){
+            if (str != checkString){
+                checkString = str;
+                $("#scoreboard-table").fadeOut();
+                $("#scoreboard-table").replaceWith(str);
+                $("#scoreboard-table").fadeIn();
+            }
+        });
+    }
 }
 
 function buildScoreBoard(callback){
