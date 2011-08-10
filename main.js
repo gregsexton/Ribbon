@@ -22,7 +22,7 @@ function stopGame(){
 }
 
 function reset(){
-    game = new Game(canvas.width, canvas.height, "canvas");
+    game = new Game(canvas.width, canvas.height, "canvas", "scoreCanvas");
     update();
     game.displayStartButton();
 }

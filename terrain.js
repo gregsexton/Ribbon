@@ -25,6 +25,17 @@ function Terrain(canvasWidth, canvasHeight, canvasID){
     var index = Math.floor((canvasWidth/this.width));
     this.pointsTop[index] = (this.maxy-gapHeight)/2;
     this.pointsBot[index] = gapHeight + this.pointsTop[i];
+
+    var canvas = document.getElementById(this.canvasID);
+    var ctx    = canvas.getContext("2d");
+
+    this.roofGradient = ctx.createLinearGradient(0,0, 0,this.maxy);
+    this.roofGradient.addColorStop(1, '#738392');
+    this.roofGradient.addColorStop(0, '#36383b');
+
+    this.floorGradient = ctx.createLinearGradient(0,0, 0,this.maxy);
+    this.floorGradient.addColorStop(0, '#738392');
+    this.floorGradient.addColorStop(1, '#36383b');
 }
 
 //TODO: magic numbers
@@ -134,10 +145,7 @@ Terrain.prototype.fillTerrain = function (ctx, isRoof){
     ctx.lineWidth   = 4;
     ctx.strokeStyle = '#f1e5c9';
     ctx.stroke();
-    var gradient = ctx.createLinearGradient(0,0, 0,this.maxy);
-    gradient.addColorStop(isRoof?1:0, '#738392');
-    gradient.addColorStop(isRoof?0:1, '#36383b');
-    ctx.fillStyle = gradient;
+    ctx.fillStyle = isRoof ? this.roofGradient : this.floorGradient;
     ctx.fill();
 }
 

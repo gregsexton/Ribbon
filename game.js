@@ -1,12 +1,13 @@
-function Game(canvasWidth, canvasHeight, canvasID){
+function Game(canvasWidth, canvasHeight, canvasID, scoreCanvasID){
     this.minx = 0;
     this.maxx = canvasWidth;
     this.miny = 0;
     this.maxy = canvasHeight;
 
-    this.canvasID = canvasID;
-    this.ribbon   = new Ribbon(canvasWidth, canvasHeight, canvasID);
-    this.terrain  = new Terrain(canvasWidth, canvasHeight, canvasID);
+    this.canvasID      = canvasID;
+    this.scoreCanvasID = scoreCanvasID;
+    this.ribbon        = new Ribbon(canvasWidth, canvasHeight, canvasID);
+    this.terrain       = new Terrain(canvasWidth, canvasHeight, canvasID);
 
     this.playing  = false;
     this.started  = false;
@@ -17,6 +18,14 @@ function Game(canvasWidth, canvasHeight, canvasID){
     this.scoreDelta = 1;
 
     this.obstacles = [];
+
+    this.drawScore = this.drawScoreConstructor();
+
+    var canvas      = document.getElementById(this.canvasID);
+    var ctx         = canvas.getContext("2d");
+    this.background = ctx.createLinearGradient(0,0, canvas.width,0);
+    this.background.addColorStop(0, '#1b2936');
+    this.background.addColorStop(1, '#273a4d');
 }
 
 Game.prototype.update = function (){
@@ -106,22 +115,30 @@ Game.prototype.createObstacle = function (){
     this.obstacles.push(obstacle);
 }
 
-Game.prototype.drawScore = function (){
-    var canvas = document.getElementById(this.canvasID);
-    var ctx    = canvas.getContext("2d");
+Game.prototype.drawScoreConstructor = function (){
+    var count = 0;
+    return function() {
+        if (count % 10 == 0){
+            var canvas = document.getElementById(this.scoreCanvasID);
+            var ctx    = canvas.getContext("2d");
 
-    ctx.font          = "bold 24px 'Luckiest Guy', sans-serif";
-    ctx.textBaseline  = "bottom";
-    ctx.fillStyle     = "#f8ed43";
-    ctx.shadowColor   = "rgba(0,0,0,1)";
-    ctx.shadowBlur    = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
 
-    var score = pad(this.score.toString(), 8);
-    ctx.fillText(score, 10, this.maxy-10);
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
+            ctx.font          = "bold 24px 'Luckiest Guy', sans-serif";
+            ctx.textBaseline  = "bottom";
+            ctx.fillStyle     = "#f8ed43";
+            ctx.shadowColor   = "rgba(0,0,0,1)";
+            ctx.shadowBlur    = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+
+            var score = pad(this.score.toString(), 8);
+            ctx.fillText(score, 10, this.maxy-10);
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+        }
+        count += 1;
+    }
 }
 
 Game.prototype.clear = function (){
@@ -131,10 +148,7 @@ Game.prototype.clear = function (){
     ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
 
     //draw background
-    var gradient = ctx.createLinearGradient(0,0, canvas.width,0);
-    gradient.addColorStop(0,   '#1b2936');
-    gradient.addColorStop(1,   '#273a4d');
-    ctx.fillStyle = gradient;
+    ctx.fillStyle = this.background;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
