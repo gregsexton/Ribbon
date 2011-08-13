@@ -20,12 +20,6 @@ function Game(canvasWidth, canvasHeight, canvasID, scoreCanvasID){
     this.obstacles = [];
 
     this.drawScore = this.drawScoreConstructor();
-
-    var canvas      = document.getElementById(this.canvasID);
-    var ctx         = canvas.getContext("2d");
-    this.background = ctx.createLinearGradient(0,0, canvas.width,0);
-    this.background.addColorStop(0, '#1b2936');
-    this.background.addColorStop(1, '#273a4d');
 }
 
 Game.prototype.update = function (){
@@ -145,10 +139,10 @@ Game.prototype.clear = function (){
     var canvas = document.getElementById(this.canvasID);
     var ctx    = canvas.getContext("2d");
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
+    //ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
 
     //draw background
-    ctx.fillStyle = this.background;
+    ctx.fillStyle = '#273a4d';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
