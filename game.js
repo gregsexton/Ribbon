@@ -191,8 +191,11 @@ Game.prototype.showEndGameScreen = function (){
     this.drawCenteredText("Your score: " + this.humanFriendlyScore(), 70);
 
     var img = new Image();
+    var maxx = this.maxx;
+    img.onload = function() {
+        ctx.drawImage(img, (maxx-img.width)/2, 140);
+    }
     img.src = "./play_icon.png";
-    ctx.drawImage(img, (this.maxx-img.width)/2, 140);
 
     this.drawCenteredText("Try again?", 120+img.height+20);
 
@@ -260,8 +263,12 @@ Game.prototype.displayStartButton = function (){
     var ctx    = canvas.getContext("2d");
 
     var img = new Image();
+    var maxx = this.maxx;
+    var maxy = this.maxy;
+    img.onload = function () {
+        ctx.drawImage(img, (maxx-img.width)/2, (maxy-img.height)/2);
+    }
     img.src = "./play_icon.png";
-    ctx.drawImage(img, (this.maxx-img.width)/2, (this.maxy-img.height)/2);
 }
 
 Game.prototype.displayStartMessage = function (){

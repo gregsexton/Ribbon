@@ -24,7 +24,6 @@ function stopGame(){
 function reset(){
     game = new Game(canvas.width, canvas.height, "canvas", "scoreCanvas");
     update();
-    game.displayStartButton();
 }
 
 window.onload = function init(){
@@ -39,6 +38,7 @@ window.onload = function init(){
         }
     }
     reset();
+    game.displayStartButton();
 
     var input = createInitialScoreboard();
     setInterval(updateScoreboard(input), 30000); //every 30 secs
