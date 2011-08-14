@@ -187,8 +187,8 @@ Game.prototype.showEndGameScreen = function (){
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
 
-    this.drawCenteredText(this.generateInsult(), 0);
-    this.drawCenteredText("Your score: " + this.humanFriendlyScore(), 60);
+    this.drawCenteredText(this.generateInsult(), 15);
+    this.drawCenteredText("Your score: " + this.humanFriendlyScore(), 70);
 
     var img = new Image();
     img.src = "./play_icon.png";
