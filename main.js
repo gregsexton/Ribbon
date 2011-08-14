@@ -22,6 +22,7 @@ function stopGame(){
 }
 
 function reset(){
+    var canvas = document.getElementById("canvas");
     game = new Game(canvas.width, canvas.height, "canvas", "scoreCanvas");
     update();
 }
