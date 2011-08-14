@@ -151,18 +151,30 @@ Terrain.prototype.fillTerrain = function (ctx, isRoof){
 
 Terrain.prototype.increaseWidth = function (delta){
     var newWidth = this.width + delta;
+    var terrain = this;
+    var getY = function(i, top){
+        var points = top ? terrain.pointsTop : terrain.pointsBot;
+        var x = i * newWidth;
+        var oldIndex = Math.floor(x/terrain.width);
+        var oldX = oldIndex * terrain.width;
+        var ratio = (x-oldX)/terrain.width;
+        if(oldIndex+1 >= points.length){
+            var y = points[points.length-1];
+        }else{
+            var yDelta = (points[oldIndex+1] - points[oldIndex])*ratio;
+            var y = points[oldIndex] + yDelta;
+        }
+        return y;
+    }
 
     //convert current coordinates
     var newPointsTop = [];
-    var newPointsBot = [];
-    var ratio = this.width/newWidth;
-    for(var i=0; i<this.pointsTop.length; i++){
-        var newIndex = i*ratio;
-        newPointsTop[Math.round(newIndex)] = this.pointsTop[i];
+    for(var i=0; i<this.maxx/newWidth; i++){
+        newPointsTop[i] = getY(i, true);
     }
-    for(var i=0; i<this.pointsBot.length; i++){
-        var newIndex = i*ratio;
-        newPointsBot[Math.round(newIndex)] = this.pointsBot[i];
+    var newPointsBot = [];
+    for(var i=0; i<this.maxx/newWidth; i++){
+        newPointsBot[i] = getY(i, false);
     }
 
     this.pointsTop = newPointsTop;

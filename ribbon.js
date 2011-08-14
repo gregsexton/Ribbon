@@ -110,10 +110,18 @@ Ribbon.prototype.increaseWidth = function (delta){
 
     //convert current coordinates
     var newPoints = [];
-    var ratio = this.width/newWidth;
-    for(var i=0; i<this.points.length; i++){
-        var newIndex = i*ratio;
-        newPoints[Math.round(newIndex)] = this.points[i];
+    for(var i=0; i<this.maxx/(newWidth*2); i++){
+        var x = i * newWidth;
+        var oldIndex = Math.floor(x/this.width);
+        var oldX = oldIndex * this.width;
+        var ratio = (x-oldX)/this.width;
+        if(oldIndex+1 >= this.points.length){
+            var y = this.points[this.points.length-1];
+        }else{
+            var yDelta = (this.points[oldIndex+1] - this.points[oldIndex])*ratio;
+            var y = this.points[oldIndex] + yDelta;
+        }
+        newPoints[i] = y;
     }
 
     this.points = newPoints;
