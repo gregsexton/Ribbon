@@ -216,7 +216,7 @@ canvas {
 }
 
 #high-score-input-name {
-    width: 290px;
+    width: 275px;
     height: 35px;
     line-height: 25px;
     font-size: 17px;
@@ -238,27 +238,26 @@ canvas {
 
 #high-score-submit {
     width: 45px;
-    height: 35px;
+    height: 39px;
     -webkit-appearance: none;
     -webkit-box-align: center;
     margin: 0px;
     margin-bottom: 10px;
     background-color: whiteSmoke;
-    background-image: -webkit-linear-gradient(top, whiteSmoke, #F1F1F1);
     background-clip: border-box;
     background-origin: padding-box;
-    border-bottom-color: rgba(0, 0, 0, 0.0976562);
+    border-bottom-color: #ffffff;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     border-bottom-style: solid;
     border-bottom-width: 1px;
-    border-left-color: rgba(0, 0, 0, 0.0976562);
+    border-left-color: #ffffff;
     border-left-style: solid;
     border-left-width: 1px;
-    border-right-color: rgba(0, 0, 0, 0.0976562);
+    border-right-color: #ffffff;
     border-right-style: solid;
     border-right-width: 1px;
-    border-top-color: rgba(0, 0, 0, 0.0976562);
+    border-top-color: #ffffff;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     border-top-style: solid;
